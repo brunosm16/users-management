@@ -2,9 +2,12 @@
   "name": "users-management",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec babel-node src/server.js",
+    "debug": "yarn run dev -- --inspect",
+    "test": "jest --runInBand",
+    "test:watch": "yarn test -- --watch"
   },
   "repository": {
     "type": "git"
