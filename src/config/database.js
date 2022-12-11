@@ -15,7 +15,7 @@ const {
 
 const dialect = 'mysql';
 
-module.exports = {
+export default {
   development: {
     username: DB_USERNAME || 'mysql',
     password: DB_PASSWORD || 'root',
