@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize';
+import { registerModels } from '../models';
 
 const DEFAULT_ENVIRONMENT = 'test';
 const SUCCESS_MESSAGE = 'Connection established successfully';
@@ -18,6 +19,7 @@ class Database {
     this.setConnection(connectionString, logging);
 
     await this.authenticate();
+    await registerModels(this.connection);
     await this.sync();
   }
 
