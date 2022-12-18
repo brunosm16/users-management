@@ -1,13 +1,10 @@
 import { Sequelize } from 'sequelize';
-import { registerModels } from '../models';
-
-const DEFAULT_ENVIRONMENT = 'test';
-const SUCCESS_MESSAGE = 'Connection established successfully';
+import { registerModels } from '../models/index.js';
 
 class Database {
   constructor(environment, dbConfig) {
-    this.environment = environment || DEFAULT_ENVIRONMENT;
-    this.dbConfig = dbConfig[this.environment];
+    this.environment = environment;
+    this.dbConfig = dbConfig;
     this.isTestEnv = this.environment === 'test';
     this.connection = null;
   }
@@ -19,13 +16,13 @@ class Database {
     this.setConnection(connectionString, logging);
 
     await this.authenticate();
-    await registerModels(this.connection);
     await this.sync();
+    this.registerDBModels();
   }
 
   async authenticate() {
     await this.connection.authenticate();
-    this.logSuccessfully();
+    console.log('DB authenticated with success');
   }
 
   async sync() {
@@ -33,12 +30,16 @@ class Database {
       force: this.isTestEnv,
       logging: false,
     });
-
-    this.logSuccessfully();
+    console.log('DB synchronized with success');
   }
 
   async disconnect() {
     await this.connection.close();
+  }
+
+  registerDBModels() {
+    registerModels(this.connection);
+    console.log('Models registered with success');
   }
 
   setConnection(string, logging = false) {
@@ -46,12 +47,8 @@ class Database {
   }
 
   getConnectionString() {
-    const { username, password, host, database, dialect } = this.dbConfig;
+    const { username, password, host, database, port, dialect } = this.dbConfig;
     return `${dialect}://${username}:${password}@${host}:${port}/${database}`;
-  }
-
-  logSuccessfully() {
-    if (!this.isTestEnv) console.log(SUCCESS_MESSAGE);
   }
 }
 
