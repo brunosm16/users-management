@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
-  "type": "module",
   "scripts": {
     "dev": "NODE_ENV=test nodemon --exec babel-node src/server.js",
     "debug": "yarn run dev -- --inspect",

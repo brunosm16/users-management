@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt';
-import environment from '../config/environment.js';
+const bcrypt = require('bcrypt')
+const environment = require('../config/environment.js')
 
 const { saltRound } = environment;
 

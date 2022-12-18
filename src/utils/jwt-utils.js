@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import environment from '../config/environment.js';
+const jwt = require('jsonwebtoken');
+const environment = require('../config/environment.js');
 
 const { jwtAccessToken, jwtRefreshToken } = environment;
 
